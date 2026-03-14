@@ -37,7 +37,7 @@ app.post("/submit", async (req,res)=>{
 
   const {data,error} = await supabase
     .from("users")
-    .insert([{name,email}])
+    .insert([{ name, mail: email }])
 
   if(error) {
     console.error("Supabase insert error:", error)

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Form</title>
+</head>
+
+<body>
+
+<h2>User Form</h2>
+
+<form id="form">
+
+<input type="text" id="name" placeholder="name" required>
+<br><br>
+
+<input type="email" id="email" placeholder="email" required>
+<br><br>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<script>
+
+document.getElementById("form").addEventListener("submit", async (e)=>{
+
+e.preventDefault()
+
+const name=document.getElementById("name").value
+const email=document.getElementById("email").value
+
+await fetch("https://your-api.onrender.com/submit",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({name,email})
+})
+
+alert("Data Stored")
+
+})
+
+</script>
+
+</body>
+</html>

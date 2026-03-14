@@ -8,23 +8,24 @@ app.use(cors())
 app.use(express.json())
 
 const supabase = createClient(
-  "https://yoyfyayzvcwiidvqwzdq.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveWZ5YXl6dmN3aWlkdnF3emRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NzU1MzcsImV4cCI6MjA4OTA1MTUzN30.cvfe0p4nFuFzK6MxanGkLcVNeOEy74DH1gyMwcKPftA"
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
 )
 
 app.post("/submit", async (req,res)=>{
-
   const {name,email} = req.body
 
   const {data,error} = await supabase
     .from("users")
     .insert([{name,email}])
 
-  if(error) return res.send(error)
+  if(error) return res.status(500).json(error)
 
-  res.send({message:"stored"})
+  res.json({message:"stored"})
 })
 
-app.listen(3000,()=>{
-  console.log("server running")
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT,()=>{
+  console.log("Server running on port", PORT)
 })
